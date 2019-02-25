@@ -6,5 +6,8 @@ class User < ActiveRecord::Base
   # and checks it agenst bcrypts hashing algurithum to make sure it is
   # the correct password
 
+  # in forms and our controller we can say password when we
+  # want to refer to our password 
+
   has_many :journal_entries
 end
