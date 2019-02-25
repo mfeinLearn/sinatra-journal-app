@@ -1,0 +1,23 @@
+<h2>Sign Up!</h2>
+<%#= restful routing conventions tells us that when we create %>
+<%#= a brand new thing (creating a user) and restful convention tells us that means we're gonna create a post %>
+<%#= request that is a http verb. Post we expect that we are going to create an assetor create a resource/ create something in the database %>
+<%#=  and our action is where do we go and we post to the plural of whatever we are creating %>
+
+<%#= How do I send information from the form to the controller? %>
+<%#= params %>
+
+<%#= the params hash will be empty when: we dont have names for our %>
+<%#= inputs %>
+<%#= BECAUSE: The name inputs becomes the key of name,email, password AND the value is %>
+<%#= the stuff that you typed into the form %>
+
+<form class="" action="/users" method="post">
+  <label for="name">Name: </label>
+  <input type="text" name="name" value="">
+  <label for="email">Email: </label>
+  <input type="text" name="email" value="">
+  <label for="password">Password: </label>
+  <input type="text" name="password" value="">
+  <input type="submit" name="" value="Create User">
+</form>
