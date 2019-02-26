@@ -38,6 +38,9 @@ class ApplicationController < Sinatra::Base
       journal_entry.user == current_user
     end
 
+
+    # BUILD HELPER METHOD FOR REDIRECTING IF NOT LOGGED IN!!
+
   end
 
 end
