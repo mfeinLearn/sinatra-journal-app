@@ -12,7 +12,7 @@ class ApplicationController < Sinatra::Base
 # 1. we matched this route
 # 2. we checked to see if we are logged in
   # 3. if we are going to the current users show page
-  # 
+  #
 # 4. otherwise we are gonig to redirect to the welcome page
   get "/" do
     if logged_in?
@@ -31,7 +31,11 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+      @current_user ||= User.find_by(id: session[:user_id])
+    end
+
+    def authorized_to_edit?(journal_entry)
+      journal_entry.user == current_user
     end
 
   end
