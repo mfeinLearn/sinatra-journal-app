@@ -52,7 +52,7 @@ class JournalEntriesController < ApplicationController
   get '/journal_entries/:id/edit' do
     set_journal_entry
     if logged_in?
-      if authorized_to_edit?
+      if authorized_to_edit?(@journal_entry)
         erb :'/journal_entries/edit'
       else
         redirect "users/#{current_user.id}"
@@ -67,7 +67,7 @@ class JournalEntriesController < ApplicationController
     # 1. find the journal entry
     set_journal_entry
     if logged_in?
-      if @journal_entry.user == current_user
+      if @journal_entry.user == current_user && params[:content] != ""
     # 2. modify (update) the journal entry
       @journal_entry.update(content: params[:content])
       # 3. redirect to show page
@@ -80,6 +80,21 @@ class JournalEntriesController < ApplicationController
     end
   end
 
+  # the restful convention for deleting something
+  delete '/journal_entries/:id' do
+    set_journal_entry
+    if authorized_to_edit?(@journal_entry)
+      # delete the entry
+      @journal_entry.destroy
+      # go somewhere
+      # redirect - because of the seperations of concerns
+      redirect '/journal_entries'
+    else
+      # go somewhere else -- not deleted
+      # redirect - because of the seperations of concerns
+      redirect '/journal_entries'
+    end
+  end
   # index route for all journal entries
 
   private # it is something that we are not
@@ -116,3 +131,15 @@ end
 # erb wants a name of a file reference from our views
 
 # Note: method invocations are inside of the controllers
+
+
+# An activerecord Delete - pluck that thing out
+
+# An activerecord Destroy -
+
+# get request - this job is to showing us something!
+
+# delete, patch and post request actions- USUALLY end in redirects
+
+##### ******* controller action = IS TO ONLY DO **ONE SHIT***/ THING ******* ######
+# get request ends in erb BECAUSE we need to show somwthing!!!! ###
