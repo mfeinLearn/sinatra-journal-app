@@ -1,5 +1,16 @@
 class JournalEntriesController < ApplicationController
 
+  get '/journal_entries' do
+    @journal_entries = JournalEntry.all
+    # we use instance varable so we can access this in the corresponding view
+    # an instance varable is scoped to the instance of which it is created
+
+    # this is going to be scoped to the instance of ApplicationController that
+    # is current.
+    erb :'journal_entries/index'
+
+  end
+
   # get journal_entries/new to render a form to create new entry
   get '/journal_entries/new' do
     #display a form for creation
@@ -41,7 +52,7 @@ class JournalEntriesController < ApplicationController
   get '/journal_entries/:id/edit' do
     set_journal_entry
     if logged_in?
-      if @journal_entry.user == current_user
+      if authorized_to_edit?
         erb :'/journal_entries/edit'
       else
         redirect "users/#{current_user.id}"
