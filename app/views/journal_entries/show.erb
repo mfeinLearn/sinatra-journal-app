@@ -2,7 +2,10 @@ show page for a journal entry
 
 <p><%= @journal_entry.content %></p>
 
-Edit Link
-<a href="/journal_entries/<%=@journal_entry.id %>/edit">Edit Entry</a>
+<%#= I am the person who owns this entry, show edit and delete links %>
 
-Delete Link
+<% if authorized_to_edit?(@journal_entry) %>
+  <a href="/journal_entries/<%=@journal_entry.id %>/edit">Edit Entry</a>
+
+  Delete Link
+<% end %>
