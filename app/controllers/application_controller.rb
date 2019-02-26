@@ -9,6 +9,11 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "our_awesome_journal_app"
   end
 
+# 1. we matched this route
+# 2. we checked to see if we are logged in
+  # 3. if we are going to the current users show page
+  # 
+# 4. otherwise we are gonig to redirect to the welcome page
   get "/" do
     if logged_in?
       redirect "/users/#{current_user.id}"

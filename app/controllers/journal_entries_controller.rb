@@ -25,6 +25,18 @@ class JournalEntriesController < ApplicationController
     end
   end
   # show route for a journal entry
+  get '/journal_entries/:id' do
+    @journal_entry = JournalEntry.find(params[:id])
+
+    erb :'/journal_entries/show'
+
+  end
+
+  # This route should send us to journal_entries/edit.erb which will
+  # render an edit form
+  get '/journal_entries/:id/edit' do
+    erb :'/journal_entries/edit'
+  end
 
   # index route for all journal entries
 end
@@ -34,3 +46,21 @@ end
 # post route: its job is to not render anything its job is to only
 
 # redirect go to-> show or index
+
+# dynamic route: so in the dynamic route the symbol of the
+# route is the key of the value which is typed into the url
+# dynamic route: The dynamic pieces in the route becomes key value pairs in the
+# params hash
+
+# redirect: when we redirect we send a brand new get request
+# when that happens all of the varables created within the block
+#   that we are passing within this paticular controller route/
+#   within this paticular action gets enialiated(redirects destroy
+#   instance varables)
+#
+#   To keep the instance varable alive to be able to be alive in
+#   the show page - we can erb/render!!!!!
+
+# erb - a method in sanatra that calls another method called
+# render
+# erb wants a name of a file reference from our views
