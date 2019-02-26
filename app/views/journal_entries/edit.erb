@@ -1,1 +1,18 @@
-edit form goes here
+edit page for a journal entry
+
+<form class="" action="/journal_entries/<%= @journal_entry.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label for="content">Content:</label>
+  <textarea name="content" style="width:auto; height:auto;"><%=@journal_entry.content%></textarea>
+  <input type="submit" name="" value="Edit Entry">
+</form>
+<%#= Rack::MethodOverride allows me to change the http verb of a request
+patch request changes existing information %>
+
+<%#=  why patch request %>
+<%#= because we are changing existing information.    %>
+
+<%#= in a route the only thing that is needed is the following:
+1. http verb
+2. the type of thing that I am going to change
+3. some unique identifier %>
