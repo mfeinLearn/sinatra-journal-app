@@ -1,0 +1,24 @@
+ACTIVE RECORD ERRORS:
+are specific objects
+that we get -
+
+we can expose the errors object with a method
+ this
+
+ if any of the validations fail we will see
+ a specific message to what ever have failed
+
+ this allows me to be able to commuctate with the users
+ better
+
+ the errors only get populated after certien method invocation
+
+
+ ----------
+ has_secure_password - comes with password must exist!
+ ->  has_secure_password - comes with a validation for password
+ already thus don't need a validation for password: (validates :password, presence: true)
+
+- they work on New http request
+- ****they will only work the way we want if my controller action ends with a redirect****
+- the message only gets fired when a redirect occurs
