@@ -22,9 +22,7 @@ class JournalEntriesController < ApplicationController
      #raise params.inspect
     # I want to create a new journal entry and save it to the DB
     # I only want to create a journal entry if a user logged in
-    if !logged_in?
-      redirect '/'
-    end
+    redirect_if_not_logged_in
     # I also only want to save the entry if it has some content
     if params[:content] != ""
       # create a new entry
@@ -33,7 +31,7 @@ class JournalEntriesController < ApplicationController
       user_id: current_user.id)
       redirect "/journal_entries/#{@journal_entry.id}"
     else
-      flash[:message] = "Something went wrong."
+      flash[:errors] = "Something went wrong - you must provide content for your entry."
       redirect '/journal_entries/new'
     end
   end
@@ -53,14 +51,11 @@ class JournalEntriesController < ApplicationController
   # render an edit form
   get '/journal_entries/:id/edit' do
     set_journal_entry
-    if logged_in?
-      if authorized_to_edit?(@journal_entry)
-        erb :'/journal_entries/edit'
-      else
-        redirect "users/#{current_user.id}"
-      end
+    redirect_if_not_logged_in
+    if authorized_to_edit?(@journal_entry)
+      erb :'/journal_entries/edit'
     else
-      redirect '/'
+      redirect "users/#{current_user.id}"
     end
   end
 
@@ -68,17 +63,14 @@ class JournalEntriesController < ApplicationController
   patch '/journal_entries/:id' do
     # 1. find the journal entry
     set_journal_entry
-    if logged_in?
-      if @journal_entry.user == current_user && params[:content] != ""
-    # 2. modify (update) the journal entry
-      @journal_entry.update(content: params[:content])
-      # 3. redirect to show page
-      redirect "/journal_entries/#{@journal_entry.id}"
-      else
-        redirect "users/#{current_user.id}"
-      end
+    redirect_if_not_logged_in
+    if @journal_entry.user == current_user && params[:content] != ""
+  # 2. modify (update) the journal entry
+    @journal_entry.update(content: params[:content])
+    # 3. redirect to show page
+    redirect "/journal_entries/#{@journal_entry.id}"
     else
-      redirect '/'
+      redirect "users/#{current_user.id}"
     end
   end
 
@@ -88,6 +80,7 @@ class JournalEntriesController < ApplicationController
     if authorized_to_edit?(@journal_entry)
       # delete the entry
       @journal_entry.destroy
+      flash[:message] = "Successfully deleted that entry."
       # go somewhere
       # redirect - because of the seperations of concerns
       redirect '/journal_entries'
