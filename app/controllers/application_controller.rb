@@ -11,6 +11,9 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
     enable :sessions
     set :session_secret, "our_awesome_journal_app"
+    # invocked a register method and pass in sinatra flash
+    # "flash is just a hash!!"
+    # flash only last for one http request
     register Sinatra::Flash
     # I now have access to a hash called flash
     # where I can add key value pairs to a flash message
@@ -21,6 +24,7 @@ class ApplicationController < Sinatra::Base
     #  that will end in a redirect
     # flash can be used when we create, update, or delete something
     # because create, update, or delete usually ends with a redirect
+    # - flash memmages only survive one http request. eg. one http request then they are gone
   end
 
 # 1. we matched this route
@@ -54,6 +58,12 @@ class ApplicationController < Sinatra::Base
 
 
     # BUILD HELPER METHOD FOR REDIRECTING IF NOT LOGGED IN!!
+    def redirect_if_not_logged_in
+      if !logged_in?
+        flash[:errors] = "You must be logged in to view the page you tried to view."
+        redirect '/'
+      end
+    end
 
   end
 
