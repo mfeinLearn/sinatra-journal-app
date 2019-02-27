@@ -28,17 +28,19 @@ class JournalEntriesController < ApplicationController
     # I also only want to save the entry if it has some content
     if params[:content] != ""
       # create a new entry
+      flash[:message] = "Journal entry successfully created."
       @journal_entry = JournalEntry.create(content: params[:content],
       user_id: current_user.id)
       redirect "/journal_entries/#{@journal_entry.id}"
     else
+      flash[:message] = "Something went wrong."
       redirect '/journal_entries/new'
     end
   end
   # show route for a journal entry
   get '/journal_entries/:id' do
     set_journal_entry
-
+    #flash[:message] = "you are looking at your show page" # noooo way <------- this is wrong this will fail!!!! a flash can not end with an erb
     erb :'/journal_entries/show'
 
   end
