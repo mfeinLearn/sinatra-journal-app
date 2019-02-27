@@ -1,5 +1,9 @@
 require './config/environment'
-
+# require - is actually looking for a name of a file
+# and it will execute that file
+# we are going to load this stuff(gem(s)) into memory
+# -  executes and loads a bunch of ruby code then makes it availble
+# for us to use
 class ApplicationController < Sinatra::Base
 
   configure do
@@ -7,6 +11,16 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
     enable :sessions
     set :session_secret, "our_awesome_journal_app"
+    register Sinatra::Flash
+    # I now have access to a hash called flash
+    # where I can add key value pairs to a flash message
+    # the life cycle of a flash message once I create it
+    # is exactly 1 http request
+
+    #NOTE: flash messages must be built at specific points within our controller
+    #  that will end in a redirect
+    # flash can be used when we create, update, or delete something
+    # because create, update, or delete usually ends with a redirect
   end
 
 # 1. we matched this route
