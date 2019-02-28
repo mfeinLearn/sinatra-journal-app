@@ -22,3 +22,21 @@ we can expose the errors object with a method
 - they work on New http request
 - ****they will only work the way we want if my controller action ends with a redirect****
 - the message only gets fired when a redirect occurs
+-----------
+do stuff in tux:
+tux
+>>>
+JournalEntry.first.update(title: "Best Tuesday Ever")
+entry.errors.full_messages
+=> []
+entry.mood
+=> nil
+JournalEntry.update(title: "Best Tuesday Ever")
+entry.errors.full_messages
+=> ["Mood can't be blank"]
+entry.valid?
+=>true
+entry.persisted? // true bc it already exist
+=>true
+
+entry.created_at
