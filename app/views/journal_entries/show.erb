@@ -1,14 +1,19 @@
-show page for a journal entry
 
+<h3><%= @journal_entry.title %></h3>
 <p><%= @journal_entry.content %></p>
+<p>Mood: <%= @journal_entry.mood %></p>
+
+<p>Created by: <%= @journal_entry.user.name %></p>
+
+<p>created on <%= @journal_entry.formatted_created_at %></p>
+
 
 <%#= I am the person who owns this entry, show edit and delete links %>
 
 <% if authorized_to_edit?(@journal_entry) %>
   <a href="/journal_entries/<%=@journal_entry.id %>/edit">Edit Entry</a>
   <br><br>
-  <form class="" action="/journal_entries/<%=@journal_entry.id %>"
-    method="post">
+  <form class="" action="/journal_entries/<%=@journal_entry.id %>" method="post">
     <!--  -->
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" name="" value="Delete this Entry">
